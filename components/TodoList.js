@@ -2,10 +2,58 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import colors from "../Colors";
 
-const TodoList = ({ list }) => {
+import {
+  useFonts,
+  Poppins_100Thin,
+  Poppins_100Thin_Italic,
+  Poppins_200ExtraLight,
+  Poppins_200ExtraLight_Italic,
+  Poppins_300Light,
+  Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_400Regular_Italic,
+  Poppins_500Medium,
+  Poppins_500Medium_Italic,
+  Poppins_600SemiBold,
+  Poppins_600SemiBold_Italic,
+  Poppins_700Bold,
+  Poppins_700Bold_Italic,
+  Poppins_800ExtraBold,
+  Poppins_800ExtraBold_Italic,
+  Poppins_900Black,
+  Poppins_900Black_Italic,
+} from "@expo-google-fonts/poppins";
+import AppLoading from "expo-app-loading";
 
-    const completedCount = list.todos.filter(todo => todo.completed).length;
-    const remainingCount = list.todos.length - completedCount
+const TodoList = ({ list }) => {
+  const completedCount = list.todos.filter((todo) => todo.completed).length;
+  const remainingCount = list.todos.length - completedCount;
+
+  const [fontsLoaded] = useFonts({
+    Poppins_100Thin,
+    Poppins_100Thin_Italic,
+    Poppins_200ExtraLight,
+    Poppins_200ExtraLight_Italic,
+    Poppins_300Light,
+    Poppins_300Light_Italic,
+    Poppins_400Regular,
+    Poppins_400Regular_Italic,
+    Poppins_500Medium,
+    Poppins_500Medium_Italic,
+    Poppins_600SemiBold,
+    Poppins_600SemiBold_Italic,
+    Poppins_700Bold,
+    Poppins_700Bold_Italic,
+    Poppins_800ExtraBold,
+    Poppins_800ExtraBold_Italic,
+    Poppins_900Black,
+    Poppins_900Black_Italic,
+  });
+
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <View style={[styles.listContainer, { backgroundColor: list.color }]}>
@@ -41,14 +89,14 @@ const styles = StyleSheet.create({
   },
   listTitle: {
     fontSize: 30,
-    fontFamily : "Poppins_400Regular",
+    fontFamily: "Poppins_400Regular",
     color: colors.white,
-    marginBottom:-5,
+    marginBottom: -5,
   },
   count: {
-      fontFamily : "Poppins_200ExtraLight",
+    fontFamily: "Poppins_200ExtraLight",
     fontSize: 48,
-    marginBottom : -10,
+    marginBottom: -10,
     color: colors.white,
   },
   subtitle: {

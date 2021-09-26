@@ -23,7 +23,7 @@ const tempData = [
   },
 
   {
-    name: "Do ur Homework",
+    name: "Do Your Homework",
     color: "#473c8b",
     todos: [
       {
@@ -46,7 +46,7 @@ const tempData = [
   },
 
   {
-    name: "Pay the bills",
+    name: "Pay The Bills",
     color: "#6b8e23",
     todos: [
       {
