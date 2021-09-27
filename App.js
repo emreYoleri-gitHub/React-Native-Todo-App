@@ -63,6 +63,10 @@ const App = () => {
     return <AppLoading />;
   }
 
+  const renderList = list => {
+    return <TodoList list={list} />
+  }
+
   return (
     <View style={styles.container}>
       <Modal
@@ -103,7 +107,7 @@ const App = () => {
           keyExtractor={(item) => item.name}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <TodoList list={item} />}
+          renderItem={({ item }) => renderList(item)}
         />
       </View>
     </View>

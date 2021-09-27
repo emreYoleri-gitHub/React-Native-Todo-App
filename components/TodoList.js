@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import colors from "../Colors";
 
 import {
@@ -24,8 +24,10 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
+import TodoModal from "./TodoModal";
 
 const TodoList = ({ list }) => {
+  const [showListVisiable, setShowListVisiable] = useState(false);
   const completedCount = list.todos.filter((todo) => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
 
@@ -50,28 +52,42 @@ const TodoList = ({ list }) => {
     Poppins_900Black_Italic,
   });
 
-
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
   return (
-    <View style={[styles.listContainer, { backgroundColor: list.color }]}>
-      <Text style={styles.listTitle} numberOfLines={1}>
-        {list.name}
-      </Text>
+    <View>
+      <Modal
+        animationType="slide"
+        visible={showListVisiable}
+        onRequestClose={() => setShowListVisiable(!showListVisiable)}
+      >
+        <TodoModal
+          list={list}
+          closeModal={() => setShowListVisiable(!showListVisiable)}
+        />
+      </Modal>
+      <TouchableOpacity
+        style={[styles.listContainer, { backgroundColor: list.color }]}
+        onPress={() => setShowListVisiable(!showListVisiable)}
+      >
+        <Text style={styles.listTitle} numberOfLines={1}>
+          {list.name}
+        </Text>
 
-      <View>
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.count}>{completedCount}</Text>
-          <Text style={styles.subtitle}>Remaining</Text>
-        </View>
+        <View>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.count}>{completedCount}</Text>
+            <Text style={styles.subtitle}>Remaining</Text>
+          </View>
 
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.count}>{remainingCount}</Text>
-          <Text style={styles.subtitle}>Completed</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text style={styles.count}>{remainingCount}</Text>
+            <Text style={styles.subtitle}>Completed</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
