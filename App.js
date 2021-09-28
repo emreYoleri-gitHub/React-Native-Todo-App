@@ -58,13 +58,22 @@ const App = () => {
   });
 
   const [addTodoVisiable, setAddTodoVisiable] = useState(false);
+  const [lists, setLists] = useState(tempData);
 
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
-  const renderList = list => {
-    return <TodoList list={list} />
+  const renderList = (list) => {
+    return <TodoList list={list} updateList={updateList} />;
+  };
+
+  const addList = (list) => {
+    setLists([...lists, { ...list, id: lists.length + 1, todos: [] }]);
+  };
+
+  const updateList = list => {
+    setLists(lists.map(item => item.id === list.id ? list : item))
   }
 
   return (
@@ -74,7 +83,10 @@ const App = () => {
         visible={addTodoVisiable}
         onRequestClose={() => setAddTodoVisiable(!addTodoVisiable)}
       >
-        <AddListModal  closeModal={()=> setAddTodoVisiable(!addTodoVisiable)}/>
+        <AddListModal
+          closeModal={() => setAddTodoVisiable(!addTodoVisiable)}
+          addList={addList}
+        />
       </Modal>
 
       <View style={{ flexDirection: "row" }}>
@@ -103,11 +115,12 @@ const App = () => {
       </View>
       <View style={{ height: 275, paddingLeft: 32 }}>
         <FlatList
-          data={tempData}
+          data={lists}
           keyExtractor={(item) => item.name}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => renderList(item)}
+          keyboardShouldPersistTaps="always"
         />
       </View>
     </View>

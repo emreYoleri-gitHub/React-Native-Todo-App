@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../Colors";
 import tempData from "../tempData";
 
-const AddListModal = ({ closeModal }) => {
+const AddListModal = ({ closeModal, addList }) => {
   const backgroundColors = [
     "#5cd859",
     "#24a6d9",
@@ -25,10 +25,12 @@ const AddListModal = ({ closeModal }) => {
   const [color, setColor] = useState(backgroundColors[0]);
 
   const createTodo = () => {
-    tempData.push({ name, color, todos: [] });
+    const list = { name, color };
 
-    setName(""),
-    closeModal()
+    addList(list);
+
+    setName("");
+    closeModal();
   };
 
   return (
@@ -63,7 +65,10 @@ const AddListModal = ({ closeModal }) => {
             />
           ))}
         </View>
-        <TouchableOpacity style={[styles.create, { backgroundColor: color }]} onPress={createTodo}>
+        <TouchableOpacity
+          style={[styles.create, { backgroundColor: color }]}
+          onPress={createTodo}
+        >
           <Text style={{ color: colors.white, fontSize: 17 }}>Create!</Text>
         </TouchableOpacity>
       </View>

@@ -26,7 +26,7 @@ import {
 import AppLoading from "expo-app-loading";
 import TodoModal from "./TodoModal";
 
-const TodoList = ({ list }) => {
+const TodoList = ({ list, updateList }) => {
   const [showListVisiable, setShowListVisiable] = useState(false);
   const completedCount = list.todos.filter((todo) => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
@@ -66,6 +66,7 @@ const TodoList = ({ list }) => {
         <TodoModal
           list={list}
           closeModal={() => setShowListVisiable(!showListVisiable)}
+          updateList={updateList}
         />
       </Modal>
       <TouchableOpacity
@@ -78,12 +79,12 @@ const TodoList = ({ list }) => {
 
         <View>
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.count}>{completedCount}</Text>
+            <Text style={styles.count}>{remainingCount}</Text>
             <Text style={styles.subtitle}>Remaining</Text>
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <Text style={styles.count}>{remainingCount}</Text>
+            <Text style={styles.count}>{completedCount}</Text>
             <Text style={styles.subtitle}>Completed</Text>
           </View>
         </View>
@@ -98,7 +99,6 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingVertical: 32,
     paddingHorizontal: 16,
-    borderRadius: 16,
     marginHorizontal: 12,
     alignItems: "center",
     width: 200,
